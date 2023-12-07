@@ -1,0 +1,102 @@
+import 'package: flutter/material.dart';
+
+void main() => runApp(MyApp());   //  Bu satır, uygulamanın ana giriş noktasını belirler. runApp fonksiyonu, verilen MyApp widget'ını kullanarak uygulamayı başlatır
+
+class MyApp extends StatelessWidget {   //  MyApp sınıfı, uygulamanın ana widget'ıdır ve StatelessWidget sınıfından türetilmiştir. Bu, uygulamanın durumu değişmez olduğu için (stateless) kullanılır.
+  @override
+  Widget build(BuildContext context) {   //  build metodu, widget'ın görünümünü oluşturur. MaterialApp widget'ını içerir ve temel uygulama yapılandırmasını sağlar.
+    print("myapp build");
+    return MaterialApp(
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,  //  Hata ayıklama (debug) modunda üst köşede görünen "debug" bandının kapatılması.
+      theme: ThemeData(
+        primarySwatch: Colors.blue,  //  Uygulamanın genel temasının belirlenmesi. Burada, temanın ana renginin mavi olması sağlanır.
+      ),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),  //  Ana ekranın MyHomePage sınıfı ile oluşturulması ve başlık parametresinin iletilmesi.
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {   //  MyHomePage sınıfı, uygulamanın ana sayfasını temsil eder ve StatefulWidget sınıfından türetilmiştir. Bu, sayfa üzerindeki durumun değişebileceği anlamına gelir
+  final String title;
+
+  const MyHomePage({  //  MyHomePage sınıfının constructor'ı. Başlık parametresi zorunlu olarak alınır.
+    Key? key,
+    required this.title,
+  }) : super(key: key);
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();  //  MyHomePage'in state nesnesini oluşturan metot.
+}
+
+class _MyHomePageState extends State<MyHomePage> {   //  MyHomePage sınıfının state'ini yöneten özel bir sınıf. State, widget'ın durumunu ve kullanıcı etkileşimine yanıt olarak yapılan değişiklikleri içerir.
+  int _counter = 0; //  Bu değişken, butona kaç kez basıldığını sayan bir sayacı tutar.
+
+//  _incrementCounter fonksiyonu, butona her basıldığında _counter'ı bir artırır 
+//  setState fonksiyonu ile Flutter'a durumun güncellendiğini bildirir
+  void _incrementCounter() {
+    print("_incrementCounter invoked");
+    setState(() {
+      _counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {  //  Bu metot, sayfa görünümünü oluşturur.
+    return Scaffold(  // Scaffold widget'ı, temel materyal tasarım yapılandırmasını sağlar. App Bar, Body, BottomNavigationBar ve FloatingActionButton gibi bileşenleri içerebilir.
+      appBar: AppBar(  //  AppBar, sayfa başlığını ve uygulama çubuğunu içerir.
+        leading: Icon(Icons.menu),  //   App Bar'ın solunda yer alacak ikon, bu durumda "menu" ikonu.
+        title: Text(widget.title),  //  App Bar'ın başlığı, yukarıda MyApp sınıfından gelen başlık.
+        actions: [
+          Icon(Icons.add),  //  App Bar'ın sağ tarafında yer alacak ikonlar, bu durumda "add" ve "remove" ikonları.
+          Icon(Icons.remove),
+        ],
+      ),
+      body: Center(  //  body, sayfanın ana içeriğini içerir. Burada bir metin ve bir düğme bulunmaktadır.
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'You have pushed the button this many times:',
+              style: TextStyle(
+                color: Colors.deepOrange,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headline4,
+            ),
+            ElevatedButton(
+              child: Text("Increment"
+              ),
+              onPressed: (){
+                print("increment pressed");
+                _incrementCounter();
+              },
+              
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(  //  BottomNavigationBar, sayfanın altındaki gezinme çubuğunu içerir.
+      items:[
+        BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            label: 'Business',
+          ),
+      ]
+      ),
+      floatingActionButton: FloatingActionButton(  //  floatingActionButton, sayfanın sağ alt köşesindeki yüzen eylem düğmesini içerir.
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
