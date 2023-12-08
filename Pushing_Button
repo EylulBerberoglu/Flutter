@@ -1,39 +1,37 @@
-import 'package: flutter/material.dart';
+import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());   //  Bu satır, uygulamanın ana giriş noktasını belirler. runApp fonksiyonu, verilen MyApp widget'ını kullanarak uygulamayı başlatır
+void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {   //  MyApp sınıfı, uygulamanın ana widget'ıdır ve StatelessWidget sınıfından türetilmiştir. Bu, uygulamanın durumu değişmez olduğu için (stateless) kullanılır.
+class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {   //  build metodu, widget'ın görünümünü oluşturur. MaterialApp widget'ını içerir ve temel uygulama yapılandırmasını sağlar.
+  Widget build(BuildContext context) {
     print("myapp build");
     return MaterialApp(
       title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,  //  Hata ayıklama (debug) modunda üst köşede görünen "debug" bandının kapatılması.
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,  //  Uygulamanın genel temasının belirlenmesi. Burada, temanın ana renginin mavi olması sağlanır.
+        primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),  //  Ana ekranın MyHomePage sınıfı ile oluşturulması ve başlık parametresinin iletilmesi.
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {   //  MyHomePage sınıfı, uygulamanın ana sayfasını temsil eder ve StatefulWidget sınıfından türetilmiştir. Bu, sayfa üzerindeki durumun değişebileceği anlamına gelir
+class MyHomePage extends StatefulWidget {
   final String title;
 
-  const MyHomePage({  //  MyHomePage sınıfının constructor'ı. Başlık parametresi zorunlu olarak alınır.
+  const MyHomePage({
     Key? key,
     required this.title,
   }) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();  //  MyHomePage'in state nesnesini oluşturan metot.
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {   //  MyHomePage sınıfının state'ini yöneten özel bir sınıf. State, widget'ın durumunu ve kullanıcı etkileşimine yanıt olarak yapılan değişiklikleri içerir.
-  int _counter = 0; //  Bu değişken, butona kaç kez basıldığını sayan bir sayacı tutar.
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
 
-//  _incrementCounter fonksiyonu, butona her basıldığında _counter'ı bir artırır 
-//  setState fonksiyonu ile Flutter'a durumun güncellendiğini bildirir
   void _incrementCounter() {
     print("_incrementCounter invoked");
     setState(() {
@@ -42,17 +40,17 @@ class _MyHomePageState extends State<MyHomePage> {   //  MyHomePage sınıfını
   }
 
   @override
-  Widget build(BuildContext context) {  //  Bu metot, sayfa görünümünü oluşturur.
-    return Scaffold(  // Scaffold widget'ı, temel materyal tasarım yapılandırmasını sağlar. App Bar, Body, BottomNavigationBar ve FloatingActionButton gibi bileşenleri içerebilir.
-      appBar: AppBar(  //  AppBar, sayfa başlığını ve uygulama çubuğunu içerir.
-        leading: Icon(Icons.menu),  //   App Bar'ın solunda yer alacak ikon, bu durumda "menu" ikonu.
-        title: Text(widget.title),  //  App Bar'ın başlığı, yukarıda MyApp sınıfından gelen başlık.
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: Icon(Icons.menu),
+        title: Text(widget.title),
         actions: [
-          Icon(Icons.add),  //  App Bar'ın sağ tarafında yer alacak ikonlar, bu durumda "add" ve "remove" ikonları.
+          Icon(Icons.add),
           Icon(Icons.remove),
         ],
       ),
-      body: Center(  //  body, sayfanın ana içeriğini içerir. Burada bir metin ve bir düğme bulunmaktadır.
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -80,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {   //  MyHomePage sınıfını
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(  //  BottomNavigationBar, sayfanın altındaki gezinme çubuğunu içerir.
+      bottomNavigationBar: BottomNavigationBar(
       items:[
         BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -92,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {   //  MyHomePage sınıfını
           ),
       ]
       ),
-      floatingActionButton: FloatingActionButton(  //  floatingActionButton, sayfanın sağ alt köşesindeki yüzen eylem düğmesini içerir.
+      floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
@@ -100,3 +98,56 @@ class _MyHomePageState extends State<MyHomePage> {   //  MyHomePage sınıfını
     );
   }
 }
+
+/*
+Bu Flutter kodu, basit bir sayma uygulamasını temsil eder. İşte her satırın görevini açıklamaya çalışacağım:
+
+1. `void main() => runApp(MyApp());`:
+   - Uygulamanın ana giriş noktasıdır.
+   - `MyApp` adlı widget'ı çalıştırarak uygulamayı başlatır.
+
+2. `class MyApp extends StatelessWidget { ... }`:
+   - Uygulamanın ana widget'ını temsil eder.
+   - `build` metodu, uygulamanın görünümünü oluşturur.
+
+3. `print("myapp build");`:
+   - `MyApp` widget'ının build metodu çağrıldığında bir log mesajı yazdırır.
+
+4. `MaterialApp`:
+   - Materyal tasarım uygulamalarını oluşturmak için kullanılan Flutter widget'ıdır.
+   - Uygulamanın genel temasını ve başlık bilgisini belirler.
+
+5. `Scaffold`:
+   - Temel yapı taşıdır ve bir uygulama sayfasını oluşturur.
+   - App Bar, Body, Bottom Navigation Bar ve Floating Action Button gibi öğeleri içerebilir.
+
+6. `MyHomePage` widget'ı:
+   - Ana sayfa için bir widget.
+   - Stateful bir widget olduğundan, kullanıcının etkileşimleri sonucunda değişen bir durumu (state) yönetir.
+
+7. `_MyHomePageState` sınıfı:
+   - `MyHomePage` widget'ının durumunu yöneten özel bir sınıftır.
+   - Sayacın değerini artıran `_incrementCounter` fonksiyonu bulunur.
+
+8. `AppBar`:
+   - Uygulamanın üst kısmında bulunan çubuktur.
+   - `leading`: AppBar'ın sol tarafındaki ikon.
+   - `title`: Başlık metni.
+   - `actions`: AppBar'ın sağ tarafında bulunan ikonlar.
+
+9. `Center` ve `Column`:
+   - Widget'larını kullanarak sayfanın ortasında bir sütun oluşturur.
+   - Sayfa üzerindeki metin ve sayacın değeri gibi öğeleri içerir.
+
+10. `ElevatedButton`:
+    - Basıldığında `_incrementCounter` fonksiyonunu çağıran artı düğmesi.
+
+11. `BottomNavigationBar`:
+    - Sayfanın altında bulunan gezinme çubuğudur.
+    - İki öğe içerir: "Home" ve "Business".
+
+12. `FloatingActionButton`:
+    - Sayfanın sağ alt köşesinde bulunan artı düğmesidir.
+    - Basıldığında `_incrementCounter` fonksiyonunu çağırır.
+
+*/
