@@ -1,0 +1,227 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        useMaterial3: true,
+      ),
+      home: const MyHomePage(title: 'Yummies :) :)'),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key, required this.title});
+
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  void _navigateToDetails(String title, String description, String imageUrl) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => DetailsPage(
+          title: title,
+          description: description,
+          imageUrl: imageUrl,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildImageContainer(
+      String imageUrl, String title, String description) {
+    return InkWell(
+      onTap: () {
+        _navigateToDetails(title, description, imageUrl);
+      },
+      child: Container(
+        height: 200,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: NetworkImage(imageUrl),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Center(
+          child: Text(widget.title),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _buildImageContainer(
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqPH_oJt58E1LlmpUfEFxLPf0s-DtAhMjLRw&usqp=CAU',
+                'Recipe Page :)',
+                'Ingredients:\n'
+                    '100 grams of butter\n'
+                    '1/2 cup of vegetable oil\n'
+                    '1/2 teacup of milk\n'
+                    '1 egg\n'
+                    '2 spoons of vinegar\n'
+                    '1/4 teaspoon of salt\n'
+                    '2 spoons of yogurt\n'
+                    '1 teacup of water\n'
+                    '4 water cups of flour\n\n'
+                    'For the sherbet\n'
+                    '2.5 water cups of granulated sugar\n'
+                    '3 cups of water\n'
+                    '1/4 lemon juice\n'
+                    '250 grams of butter',
+              ),
+              SizedBox(height: 16),
+              _buildImageContainer(
+                'https://www.istanbulfotografci.com/wp-content/uploads/Yemek-Menu%CC%88-C%CC%A7ekimi_-Fiyatlari.jpg',
+                'Recipe Page :)',
+                '4 cups of flour, 1 teaspoon of salt, 1 teaspoon of sugar, and a half cup of lukewarm water with yeast, and add to the mixture. After 10 minutes of kneading, we obtain a hard dough. Sprinkle an egg yolk and sesame on top and bake in the oven for 30 minutes. When it comes out of the oven, brush with butter. Enjoy your meal.',
+              ),
+              SizedBox(height: 16),
+              _buildImageContainer(
+                'https://image.milimaj.com/i/milliyet/75/869x477/5ca1c95445d2a029641a2d77.jpg',
+                'Recipe Page :)',
+                'Ingredients:\n'
+                    '3-4 big onions\n'
+                    '1/4 cup lemon juice\n'
+                    '1 lb lean ground beef\n'
+                    '2 tomatoes\n'
+                    '5-6 cloves garlic\n'
+                    '1/4 cup canola oil\n'
+                    '2 lb fine bulgur (cracked wheat)\n'
+                    '2-3 Tbsp salt\n'
+                    '5-6 Tbsp isot (crushed hot pepper)\n'
+                    '1-2 Tbsp cumin\n'
+                    '750 gr red hot pepper paste/ tomato and pepper paste mix',
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DetailsPage extends StatelessWidget {
+  final String title;
+  final String description;
+  final String imageUrl;
+
+  const DetailsPage({
+    Key? key,
+    required this.title,
+    required this.description,
+    required this.imageUrl,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+        backgroundColor: Theme.of(context)
+            .colorScheme
+            .primary, // Set the background color here
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            height: 200,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: NetworkImage(imageUrl),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(description),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/*
+Kodun her bir bölümü ve satırındaki kavramları açıklıyorum:
+
+1. `void main() { runApp(const MyApp()); }`:
+   - Uygulamanın başlangıç noktasını belirleyen `main` fonksiyonu. 
+   - `runApp(const MyApp())`, `MyApp` widget'ını başlatarak uygulamayı çalıştırır.
+
+2. `class MyApp extends StatelessWidget { const MyApp({Key? key}); ...`:
+   - `MyApp` sınıfı, bir `StatelessWidget` sınıfından türetilmiştir.
+   - Uygulamanın genel temasını ve ana ekranını oluşturur.
+   - Tema renklerini ve `MyHomePage`'yi içerir.
+
+3. `MaterialApp` widget'ı:
+   - `title`: Uygulama başlığı.
+   - `theme`: Uygulama temasını belirler.
+   - `home`: Ana ekranı belirler, `MyHomePage` widget'ını içerir.
+
+4. `class MyHomePage extends StatefulWidget { ...`:
+   - `MyHomePage` sınıfı, bir `StatefulWidget` sınıfından türetilmiştir.
+   - Ana sayfadaki görselleri ve içeriği listeleyen bir sınıftır.
+
+5. `_MyHomePageState` sınıfı:
+   - `MyHomePage`'nin durumunu yöneten özel bir sınıf.
+   - `_navigateToDetails` fonksiyonu: Ayrıntılar sayfasına geçişi sağlar.
+   - `_buildImageContainer` fonksiyonu: Görsel konteynır oluşturur.
+
+6. `_navigateToDetails(String title, String description, String imageUrl) { ... }`:
+   - Tıklanan görselin ayrıntılarına geçiş sağlayan fonksiyon.
+
+7. `_buildImageContainer(String imageUrl, String title, String description) { ... }`:
+   - Görsel için bir konteynır oluşturan fonksiyon.
+
+8. `Scaffold` widget'ı:
+   - Temel materyal tasarım yapı taşıdır. 
+   - `appBar` ve `body` olmak üzere iki ana bölümden oluşur.
+
+9. `AppBar` widget'ı:
+   - Üst bilgi çubuğunu temsil eder.
+   - `backgroundColor` ile arka plan rengini alır.
+
+10. `_buildImageContainer` çağrıları:
+    - Her biri farklı bir görsel ve açıklama içeren `_buildImageContainer` fonksiyonunu çağırır.
+
+11. `DetailsPage` sınıfı:
+    - Görselin detaylarını gösteren sayfayı temsil eder.
+    - `Scaffold` içinde `AppBar` ve `body` bulunur.
+
+12. `DetailsPage` sınıfının yapıcı metodu:
+    - `title`, `description`, `imageUrl` gibi görsel detaylarını alır.
+
+13. `DetailsPage`'nin `build` metodu:
+    - Görsel ve açıklamayı içeren bir sütun içerir.
+    - `AppBar`'ın arka plan rengi, ana sayfadaki temanın tersine çevrilmiştir.
+
+*/
