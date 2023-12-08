@@ -1,0 +1,246 @@
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter App',
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Flutter App'),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Card(
+            child: Container(),
+            elevation: 5,
+          ),
+          TransactionList(),
+        ],
+      ),
+    );
+  }
+}
+
+class Transaction {
+  final String id;
+  final String name;
+  final String surname;
+  final double gpd;
+
+  Transaction({
+    required this.id,
+    required this.name,
+    required this.surname,
+    required this.gpd,
+  });
+}
+
+class TransactionList extends StatefulWidget {
+  @override
+  _TransactionListState createState() => _TransactionListState();
+}
+
+class _TransactionListState extends State<TransactionList> {
+  final List<Transaction> transactions = [];
+  final idController = TextEditingController();
+  final nameController = TextEditingController();
+  final surnameController = TextEditingController();
+  final gpdController = TextEditingController();
+
+  void addTransaction(
+      String txid, String txname, String txsurname, double txgpd) {
+    final newTx = Transaction(
+      id: txid,
+      name: txname,
+      surname: txsurname,
+      gpd: txgpd,
+    );
+    setState(() {
+      transactions.add(newTx);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Card(
+          elevation: 5,
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                TextField(
+                  decoration: InputDecoration(labelText: 'Id'),
+                  controller: idController,
+                ),
+                TextField(
+                  decoration: InputDecoration(labelText: 'Name'),
+                  controller: nameController,
+                ),
+                TextField(
+                  decoration: InputDecoration(labelText: 'Surname'),
+                  controller: surnameController,
+                ),
+                TextField(
+                  decoration: InputDecoration(labelText: 'GPD'),
+                  controller: gpdController,
+                ),
+                TextButton(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text('Add Student'),
+                  ),
+                  onPressed: () {
+                    addTransaction(
+                      idController.text,
+                      nameController.text,
+                      surnameController.text,
+                      double.tryParse(gpdController.text) ?? 0.0,
+                    );
+                    idController.clear();
+                    nameController.clear();
+                    surnameController.clear();
+                    gpdController.clear();
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+        Column(
+          children: transactions.map((tx) {
+            return Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Id: ${tx.id}',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(width: 50),
+                      Text(
+                        'Name: ${tx.name}',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'GPD: ${tx.gpd}',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(width: 50),
+                      Text(
+                        'Surname: ${tx.surname}',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          }).toList(),
+        ),
+      ],
+    );
+  }
+}
+
+/*
+Tablonun her satırında kodun kavramlarını açıklıyorum:
+
+1. `void main() => runApp(MyApp());`:
+   - `main()` fonksiyonu, uygulamanın başlangıç noktasıdır.
+   - `runApp(MyApp())`, `MyApp` widget'ını çalıştırarak uygulamayı başlatır.
+
+2. `class MyApp extends StatelessWidget {`:
+   - `MyApp` sınıfı, bir `StatelessWidget` sınıfından türetilmiştir.
+   - Uygulamanın genel temasını ve ana ekranını oluşturur.
+
+3. `return MaterialApp(...)`:
+   - `MaterialApp` widget'ı, Material Design temelli bir uygulama oluşturmak için kullanılır.
+   - Uygulamanın başlığını ve ana ekranını belirler.
+
+4. `home: MyHomePage(),`:
+   - Uygulamanın ana ekranını `MyHomePage` widget'ı ile belirler.
+
+5. `class MyHomePage extends StatelessWidget {`:
+   - `MyHomePage` sınıfı, ana ekranın içeriğini oluşturan bir `StatelessWidget`'tir.
+   - Bir sütun içinde bir kart ve bir `TransactionList` widget'ı içerir.
+
+6. `Card(...)`:
+   - Bir kart oluşturan `Card` widget'ı, giriş alanlarını içerir.
+
+7. `Transaction` sınıfı:
+   - Bir işlemi temsil eden bir sınıftır. İşlemin id, isim, soyisim ve GPD (Gayri Safi Yurtiçi Hasıla) özellikleri bulunur.
+
+8. `TransactionList` sınıfı:
+   - Bir `StatefulWidget` sınıfıdır ve işlemleri listeler.
+   - Kullanıcıdan alınan giriş bilgilerini ekler ve işlemleri listeleyen bir arayüz sağlar.
+
+9. `_TransactionListState` sınıfı:
+   - `TransactionList` sınıfının içinde bulunan, işlemleri ekleyen ve listeleyen bir durum sınıfıdır.
+
+10. `Column(...)`:
+    - Bir sütun oluşturan `Column` widget'ı, kartı ve işlemleri listeleyen widget'ı içerir.
+
+11. `TextField(...)`:
+    - Bir metin giriş alanı oluşturan `TextField` widget'ı, kullanıcının veri girmesine olanak tanır.
+
+12. `TextButton(...)`:
+    - Bir düğme oluşturan `TextButton` widget'ı, kullanıcının yeni bir işlem eklemesini sağlar.
+
+13. `transactions`:
+    - İşlemleri tutan bir liste.
+
+14. `addTransaction(...)`:
+    - Bir işlem eklemek için kullanılan bir fonksiyon.
+
+15. `transactions.map((tx) {...}).toList(),`:
+    - İşlemleri listeleyen bir `Column` içindeki kartları oluşturan bir döngü.
+
+16. `Card(...)` (ikinci kullanım):
+    - İşlemleri listeleyen bir kart oluşturan `Card` widget'ı.
+
+17. `Row(...)`:
+    - Satırdaki öğeleri yatayda düzenlemek için kullanılan `Row` widget'ı.
+
+18. `SizedBox(width: 50),`:
+    - Bir boyutlu kutu oluşturan `SizedBox` widget'ı, yatayda bir boşluk ekler.
+
+19. `Text(...)`:
+    - Metin içeren bir widget olan `Text` widget'ı, işlemlerin belirli özelliklerini görüntüler.
+
+*/
