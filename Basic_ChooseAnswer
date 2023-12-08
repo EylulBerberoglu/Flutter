@@ -1,0 +1,84 @@
+void main() {
+  runApp(MyApp());
+}
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+class _MyAppState extends State<MyApp> {
+  var questionIndex=0;
+  void answerQuestion() {
+    setState(() {
+       questionIndex++;
+    });   
+    print("button click $questionIndex");    
+  }
+  @override
+  Widget build(BuildContext context) {
+    var questions=['What is your fav color?','What is your fav animal?'];
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("My first app"),
+        ), //appBar
+        body: Column(
+          children: [
+            Text(questions.elementAt(questionIndex)),
+            ElevatedButton(child: Text("Answer 1"), onPressed: answerQuestion),
+            ElevatedButton(
+                child: Text("Answer 2"),
+                onPressed: () {
+                  print("answer 2 is chosen");
+                }),
+            ElevatedButton(child: Text("Answer 3"), onPressed: answerQuestion),
+          ],
+        ),
+      ), //scaffold
+    ); //materialapp
+  }
+}
+
+/*
+Bu Flutter kodu, basit bir quiz uygulamasını temsil eder. İşte her satırın görevini açıklamaya çalışacağım:
+
+1. `void main() { runApp(MyApp()); }`:
+   - Uygulamanın ana giriş noktasıdır.
+   - `MyApp` adlı widget'ı çalıştırarak uygulamayı başlatır.
+
+2. `class MyApp extends StatefulWidget { ... }`:
+   - Uygulamanın ana widget'ı olan `MyApp` sınıfını tanımlar.
+   - Bu widget, kullanıcının sorulara verdiği yanıtları takip eden bir durum (state) içerir.
+
+3. `_MyAppState` sınıfı:
+   - `MyApp` widget'ının durumunu yöneten özel bir sınıftır.
+   - `questionIndex` adlı bir değişken, mevcut sorunun dizindeki konumunu takip eder.
+   - `answerQuestion` fonksiyonu, sorulara verilen yanıtları yönetir ve kullanıcının bir sonraki soruya geçmesini sağlar.
+
+4. `void answerQuestion() { ... }`:
+   - Kullanıcının sorulara verdiği yanıtları yöneten fonksiyon.
+   - `setState` fonksiyonu, uygulamanın yeniden çizilmesini ve güncel durumu yansıtmasını sağlar.
+
+5. `Widget build(BuildContext context) { ... }`:
+   - Uygulamanın görsel arayüzünü oluşturan `build` metodunu içerir.
+   - `Scaffold` widget'ı, temel materyal tasarım yapı taşıdır.
+   - `AppBar`, uygulamanın üst kısmında görünen çubuğu temsil eder.
+   - `Column`, dikey bir sıra içinde diğer widget'ları düzenler.
+
+6. `var questions = ['What is your fav color?', 'What is your fav animal?'];`:
+   - Soruları içeren bir dizi (list) tanımlar.
+
+7. `Text(questions.elementAt(questionIndex)),`:
+   - Mevcut soruyu ekrana yazdıran `Text` widget'ı.
+   - `questionIndex`, şu anda gösterilen sorunun indeksini belirler.
+
+8. `ElevatedButton(child: Text("Answer 1"), onPressed: answerQuestion),`:
+   - Kullanıcının sorulara cevap vermesini sağlayan ilk düğme.
+   - `onPressed` parametresi, düğmeye tıklandığında çağrılacak fonksiyonu belirtir.
+
+9. `ElevatedButton(... onPressed: () { print("answer 2 is chosen"); }),`:
+   - İkinci düğme için anonim bir fonksiyon kullanır ve konsola bir mesaj yazdırır.
+
+10. `ElevatedButton(child: Text("Answer 3"), onPressed: answerQuestion),`:
+    - Kullanıcının bir sonraki soruya geçmesini sağlayan üçüncü düğme.
+
+*/
